@@ -60,11 +60,20 @@ public class MyUtils {
      * @return absolute file name of the saved resource.
      */
     static public String copyResourceToFile(String resourceName) {
-        return copyResourceToFile(resourceName, resourceName);
+        try {
+            // Create extracted directory if it does not exists.
+            if (!Files.exists(Paths.get("extracted/"))) {
+                Files.createDirectory(Paths.get("extracted/"));
+            }
+            return copyResourceToFile(resourceName, "extracted/" + resourceName);
+        } catch (IOException ex) {
+            Logger.getLogger(MyUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     /**
-     * Extract all necessary embeded ressources from file. The parameters are 
+     * Extract all necessary embeded ressources from file. The parameters are
      * adjusted as needed, with the absolute file names.
      *
      * @return absolute file name of the main configuration file.
@@ -74,25 +83,24 @@ public class MyUtils {
         try {
             String configure = copyResourceToFile("mydefaultconfig.yml");
             String security = copyResourceToFile("security.yml");
-            
+
             // Substitute absolute path names.
             List<String> newConf = Files.lines(Paths.get(configure))
                     .map((line) -> {
-                        line =  line.replaceAll("security.yml", security);                        
+                        line = line.replaceAll("security.yml", security);
                         return line;
                     })
                     .collect(Collectors.toList());
-            
+
             // Rewrite modified file.
-            Files.write(Paths.get(configure),newConf, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-                   
+            Files.write(Paths.get(configure), newConf, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+
             return configure;
         } catch (IOException ex) {
             Logger.getLogger(MyUtils.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
-        
+
     }
 
 }
