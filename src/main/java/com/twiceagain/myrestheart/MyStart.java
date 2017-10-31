@@ -6,7 +6,6 @@
 package com.twiceagain.myrestheart;
 
 import com.twiceagain.myrestheart.utils.MyUtils;
-import static com.twiceagain.myrestheart.utils.MyUtils.copyResourceToFile;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -22,6 +21,12 @@ import org.restheart.ConfigurationException;
 public class MyStart {
 
     /**
+     * This contains the arguments used to call the bootstrapper, possibly after
+     * substitution. It is needed to call the shutdowner ...
+     */
+    static public List<String> ARGS;
+
+    /**
      * @param args the command line arguments
      * @throws org.restheart.ConfigurationException
      * @throws java.net.URISyntaxException
@@ -32,17 +37,16 @@ public class MyStart {
         // Identify custom vs. standard version.
         System.out.println("\nStarting my customized bootstrapper (MyRestheart) ...");
 
-        // If no config file specified on command line,  add the embedded one.
-        List<String> newArgs = new ArrayList<>(Arrays.asList(args));
-        if ((newArgs.contains("--fork") && newArgs.size() == 1)
-                || newArgs.isEmpty()) {
+        // If no config file specified on command line,  add the embedded one.   
+        ARGS = new ArrayList<>(Arrays.asList(args));
+        if ((ARGS.contains("--fork") && ARGS.size() == 1) || ARGS.isEmpty()) {
             System.out.println("Extracting and adjusting embedded configuration file");
-            newArgs.add(MyUtils.extractAndAdjustEmbedded());
+            ARGS.add(MyUtils.extractAndAdjustEmbedded());
         } else {
             System.out.println("Using provided command line arguments");
         }
 
-        Bootstrapper.main((String[]) newArgs.toArray(args));
+        Bootstrapper.main((String[]) ARGS.toArray(args));
 
     }
 
