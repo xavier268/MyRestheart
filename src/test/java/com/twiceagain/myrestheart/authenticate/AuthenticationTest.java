@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.twiceagain.myrestheart;
+package com.twiceagain.myrestheart.authenticate;
 
-import java.io.IOException;
-import org.apache.http.HttpResponse;
+import com.twiceagain.myrestheart.utils.HttpUtilities;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
- *
+ * Test token creation/usage for authentication.
  * @author xavier
  */
-public class DirectMongoConnectivityTest extends HttpUtilities{
+public class AuthenticationTest extends HttpUtilities {
     
-    public DirectMongoConnectivityTest() {
+    public AuthenticationTest() {
     }
     
     @BeforeClass
@@ -39,11 +37,7 @@ public class DirectMongoConnectivityTest extends HttpUtilities{
     public void tearDown() {
     }
     
-    @Test(timeout = 1000)
-    public void mongoIsRunning() throws IOException {
-        HttpResponse rep = get("http://localhost:27017");
-        assertEquals(200, rep.getStatusLine().getStatusCode());
-        assertTrue(retrieveContent(rep).toLowerCase().contains("looks like you are trying to access mongodb over http on the native driver port"));
-    }
+    @Test
+    public void test(){};
     
 }

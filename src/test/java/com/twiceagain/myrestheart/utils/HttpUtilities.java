@@ -1,4 +1,4 @@
-package com.twiceagain.myrestheart;
+package com.twiceagain.myrestheart.utils;
 
 import java.io.IOException;
 import org.apache.http.HttpResponse;

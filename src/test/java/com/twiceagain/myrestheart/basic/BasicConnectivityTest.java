@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.twiceagain.myrestheart;
+package com.twiceagain.myrestheart.basic;
 
+import com.twiceagain.myrestheart.utils.HttpUtilities;
+import com.twiceagain.myrestheart.MyEntryPoint;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.net.ssl.SSLHandshakeException;
 import org.apache.http.HttpResponse;
-import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.restheart.ConfigurationException;
 
 /**
  *
@@ -27,22 +27,18 @@ public class BasicConnectivityTest extends HttpUtilities{
     }
 
     @BeforeClass
-    public static void setUpClass() throws ConfigurationException, URISyntaxException, IOException {
-        MyStart.main(new String[0]);
+    public static void setUpClass() {
+        try {
+        MyEntryPoint.start(new String[0]);
+        } catch(Exception ex) {
+            System.out.println("Seems Restheart already running ?");
+        }
     }
 
     @AfterClass
-    public static void tearDownClass() {
-        MyAbort.main(new String[0]);
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
+    public static void tearDownClass() {          
+        // MyEntryPoint.stop(new String[0]);
+    }    
 
     @Test
     public void browserIsReacheable() throws IOException {
