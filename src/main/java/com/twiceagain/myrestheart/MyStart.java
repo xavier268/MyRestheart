@@ -43,7 +43,7 @@ public class MyStart {
             System.out.println("Extracting and adjusting embedded configuration file");
             ARGS.add(MyUtils.extractAndAdjustEmbedded());
         } else {
-            System.out.println("Using provided command line arguments");
+            System.out.println("Using provided command line arguments");            
         }
 
         Bootstrapper.main((String[]) ARGS.toArray(args));
