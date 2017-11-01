@@ -5,7 +5,7 @@
  */
 package com.twiceagain.myrestheart.basic;
 
-import com.twiceagain.myrestheart.utils.HttpUtilities;
+import com.twiceagain.myrestheart.utils.TestUtilities;
 import com.twiceagain.myrestheart.utils.TestConfig;
 import java.io.IOException;
 import org.apache.http.HttpResponse;
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  *
  * @author xavier
  */
-public class DirectMongoConnectivityTest extends HttpUtilities implements TestConfig {
+public class DirectMongoConnectivityTest extends TestUtilities implements TestConfig {
 
     public DirectMongoConnectivityTest() {
     }
@@ -24,7 +24,7 @@ public class DirectMongoConnectivityTest extends HttpUtilities implements TestCo
 
     @Test(timeout = 1000)
     public void mongoIsRunning() throws IOException {
-        HttpResponse rep = get(TestConfig.BASE_MONGO_HTTP);
+        HttpResponse rep = get(TestConfig.MONGO_HTTP);
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertTrue(retrieveContent(rep).toLowerCase().contains("looks like you are trying to access mongodb over http on the native driver port"));
     }

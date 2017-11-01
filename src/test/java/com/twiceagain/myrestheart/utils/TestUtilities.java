@@ -19,7 +19,8 @@ import org.apache.http.util.EntityUtils;
  *
  * @author xavier
  */
-public class HttpUtilities implements TestConfig{
+public class TestUtilities implements TestConfig{
+    
 
     /**
      * get a response via Http.

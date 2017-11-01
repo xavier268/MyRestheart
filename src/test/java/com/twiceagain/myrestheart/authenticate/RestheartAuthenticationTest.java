@@ -6,8 +6,8 @@
 package com.twiceagain.myrestheart.authenticate;
 
 import com.twiceagain.myrestheart.MyEntryPoint;
-import com.twiceagain.myrestheart.utils.HttpUtilities;
-import static com.twiceagain.myrestheart.utils.HttpUtilities.get;
+import com.twiceagain.myrestheart.utils.TestUtilities;
+import static com.twiceagain.myrestheart.utils.TestUtilities.get;
 import com.twiceagain.myrestheart.utils.TestConfig;
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author xavier
  */
-public class RestheartAuthenticationTest extends HttpUtilities implements TestConfig {
+public class RestheartAuthenticationTest extends TestUtilities implements TestConfig {
 
 
     public RestheartAuthenticationTest() {
@@ -36,7 +36,7 @@ public class RestheartAuthenticationTest extends HttpUtilities implements TestCo
     @Test
     public void authenticateConnectivity() throws IOException {
         System.out.println("Ability to reach browser before actually authenticating ...");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser");
+        HttpResponse rep = get(RESTHEART_HTTP + "/browser");
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
     }
@@ -44,21 +44,21 @@ public class RestheartAuthenticationTest extends HttpUtilities implements TestCo
     @Test
     public void unauthenticatedCall() throws IOException {
         System.out.println("Unauthenticated call");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP );
+        HttpResponse rep = get(RESTHEART_HTTP );
         assertEquals(401, rep.getStatusLine().getStatusCode());
     }
 
     @Test
     public void authenticateAsAdmin() throws IOException {
         System.out.println("Authenticated with password");
-        HttpResponse rep = authGet(BASE_RESTHEART_HTTP, TESTUSER, TESTPASSWORD);
+        HttpResponse rep = authGet(RESTHEART_HTTP, TESTUSER, TESTPASSWORD);
         assertEquals(200, rep.getStatusLine().getStatusCode());
     }
 
     @Test
     public void authenticateAsAdminWrongPassword() throws IOException {
         System.out.println("Authenticated as Admin (a)-wrong password");
-        HttpResponse rep = authGet(BASE_RESTHEART_HTTP, TESTUSER, TESTPASSWORD + "x");
+        HttpResponse rep = authGet(RESTHEART_HTTP, TESTUSER, TESTPASSWORD + "x");
         assertEquals(401, rep.getStatusLine().getStatusCode());
     }
 
@@ -67,7 +67,7 @@ public class RestheartAuthenticationTest extends HttpUtilities implements TestCo
         System.out.println("Authenticated, read token, and re-authentify with it (a)");
 
         // Authenticate with password
-        HttpResponse rep = authGet(BASE_RESTHEART_HTTP, TESTUSER, TESTPASSWORD);
+        HttpResponse rep = authGet(RESTHEART_HTTP, TESTUSER, TESTPASSWORD);
         assertEquals(200, rep.getStatusLine().getStatusCode());
 
         System.out.println(Arrays.toString(rep.getHeaders("Auth-Token")));
@@ -79,7 +79,7 @@ public class RestheartAuthenticationTest extends HttpUtilities implements TestCo
         String location = rep.getHeaders("Auth-Token-Location")[0].getValue();
 
         // Reauthenticate with token
-        rep = authGet(BASE_RESTHEART_HTTP, TESTUSER, token);
+        rep = authGet(RESTHEART_HTTP, TESTUSER, token);
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertNotEquals(oldValidity, rep.getHeaders("Auth-Token-Valid-Until")[0].getValue());
         assertEquals(token, rep.getHeaders("Auth-Token")[0].getValue());

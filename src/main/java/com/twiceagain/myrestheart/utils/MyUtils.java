@@ -8,18 +8,16 @@ package com.twiceagain.myrestheart.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.restheart.Configuration;
 
 /**
  * Various utilities.
@@ -101,6 +99,10 @@ public class MyUtils {
             return null;
         }
 
+    }
+    
+    public static String getRestheartVersion() {
+        return Configuration.RESTHEART_VERSION;
     }
 
 }

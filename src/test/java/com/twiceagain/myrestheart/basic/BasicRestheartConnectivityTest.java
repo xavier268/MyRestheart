@@ -5,7 +5,7 @@
  */
 package com.twiceagain.myrestheart.basic;
 
-import com.twiceagain.myrestheart.utils.HttpUtilities;
+import com.twiceagain.myrestheart.utils.TestUtilities;
 import com.twiceagain.myrestheart.MyEntryPoint;
 import com.twiceagain.myrestheart.utils.TestConfig;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import org.junit.Test;
  *
  * @author xavier
  */
-public class BasicRestheartConnectivityTest extends HttpUtilities implements TestConfig{
+public class BasicRestheartConnectivityTest extends TestUtilities implements TestConfig{
 
     public BasicRestheartConnectivityTest() {
     }
@@ -39,7 +39,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
     @Test
     public void browserIsReacheable() throws IOException {
         System.out.println("Test browser is reacheable (no trailing slash)");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser");
+        HttpResponse rep = get(RESTHEART_HTTP + "/browser");
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
     }
@@ -47,7 +47,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
     @Test
     public void browserIsReacheableTrailingSlash() throws IOException {
         System.out.println("Test browser is reacheable (with trailing slash)");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser/");
+        HttpResponse rep = get(RESTHEART_HTTP + "/browser/");
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
     }
@@ -56,7 +56,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
     @Deprecated 
     public void browserIsReacheableOnHttps() throws IOException {
         System.out.println("Test browser is reacheable on https - generates exception for selfsigned certyificate ...");
-        HttpResponse rep = get(BASE_RESTHEART_HTTPS + "/browser/");        
+        HttpResponse rep = get(RESTHEART_HTTPS + "/browser/");        
     }
     
     
@@ -64,7 +64,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
     @Test
     public void browserContent() throws IOException {
         System.out.println("Test browser content is credible");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser");
+        HttpResponse rep = get(RESTHEART_HTTP + "/browser");
         String content = retrieveContent(rep);
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
@@ -75,14 +75,14 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
     @Test
     public void rootAccess() throws IOException {
         System.out.println("Test root access - should be unauthorized (401)");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP);
+        HttpResponse rep = get(RESTHEART_HTTP);
         assertEquals(401, rep.getStatusLine().getStatusCode());        
     }
     
     @Test
     public void pingTest() throws IOException {
         System.out.println("Test /_logic/ping - should contain ciao ...");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/_logic/ping");
+        HttpResponse rep = get(RESTHEART_HTTP + "/_logic/ping");
         assertEquals(200, rep.getStatusLine().getStatusCode());   
         assertTrue(retrieveContent(rep).contains("ciao from the restheart team"));
    
@@ -91,7 +91,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities implements Tes
 @Test
     public void unknownUnauthorizedCollection() throws IOException {
         System.out.println("Test unknown mongo collection");
-        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/nonexistingcollection/");
+        HttpResponse rep = get(RESTHEART_HTTP + "/nonexistingcollection/");
         assertEquals(401, rep.getStatusLine().getStatusCode()); 
     }
     
