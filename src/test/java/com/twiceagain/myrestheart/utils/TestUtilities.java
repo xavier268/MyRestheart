@@ -16,7 +16,7 @@ import org.apache.http.util.EntityUtils;
  * and open the template in the editor.
  */
 /**
- *
+ * Parent class for all tests.
  * @author xavier
  */
 public class TestUtilities implements TestConfig{
@@ -33,6 +33,14 @@ public class TestUtilities implements TestConfig{
         return HttpClientBuilder.create().build().execute(new HttpGet(uri));
     }
 
+    /**
+     * Get a response via Basic Authentification Http Get.
+     * @param uri
+     * @param user
+     * @param passwordOrToken
+     * @return
+     * @throws IOException 
+     */
     public static HttpResponse authGet(String uri, String user, String passwordOrToken) throws IOException {
         HttpUriRequest ur = new HttpGet(uri);
         String b64 = Base64.getEncoder().encodeToString((user + ":" + passwordOrToken).getBytes());

@@ -72,7 +72,10 @@ public class MyUtils {
 
     /**
      * Extract all necessary embeded ressources from file. The parameters are
-     * adjusted as needed, with the absolute file names.
+     * adjusted as needed. The security.yml relative file name is subsitituted
+     * with the absolute file name. Th mongo-uri is always subsitituted from
+     * either the default, or the jvm command line -D argument ( -Dmongo="..."
+     * ).
      *
      * @return absolute file name of the main configuration file.
      */
@@ -81,12 +84,14 @@ public class MyUtils {
         try {
             String configure = copyResourceToFile("mydefaultconfig.yml");
             String security = copyResourceToFile("security.yml");
-
-            // Substitute absolute path names.
+            final String MONGO = System.getProperty("mongo", "mongodb://localhost:27017");
+            System.out.println("mongo-uri configuration replaced with : " + MONGO);
+            // Substitute selected value in configuration
             List<String> newConf = Files.lines(Paths.get(configure))
                     .map((line) -> {
-                        line = line.replaceAll("security.yml", security);
-                        return line;
+                        return line
+                                .replaceAll("conf-file:\\s*security.yml", "conf-file: " + security)
+                                .replaceAll("mongo-uri:.*$", "mongo-uri: " + MONGO);
                     })
                     .collect(Collectors.toList());
 
@@ -100,9 +105,23 @@ public class MyUtils {
         }
 
     }
-    
+
     public static String getRestheartVersion() {
         return Configuration.RESTHEART_VERSION;
+    }
+
+    /**
+     * Get the mongo uri as specified on the jvm -Dxxx aggument (property), or
+     * provide a reasonable default if not set. Important note : setting the
+     * -Dxxx env variable in netbeans will only apply for execution, not for the
+     * tests. And building the uberjar involves testing. So make sure the
+     * default localhost:27017 mongo is available for testing/building. Then
+     * when running, use whatever production mongo server uri.
+     *
+     * @return
+     */
+    public static String getMongoUri() {
+        return System.getProperty("mongo", "mongodb://localhost:27017");
     }
 
 }

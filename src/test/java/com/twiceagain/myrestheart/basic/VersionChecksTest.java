@@ -8,7 +8,7 @@ package com.twiceagain.myrestheart.basic;
 import com.twiceagain.myrestheart.MyEntryPoint;
 import com.twiceagain.myrestheart.utils.MyUtils;
 import com.twiceagain.myrestheart.utils.TestConfig;
-import org.bson.BSON;
+import com.twiceagain.myrestheart.utils.TestUtilities;
 import org.bson.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  *
  * @author xavier
  */
-public class VersionChecksTest implements TestConfig {
+public class VersionChecksTest extends TestUtilities implements TestConfig {
 
     public VersionChecksTest() {
 
@@ -35,7 +35,7 @@ public class VersionChecksTest implements TestConfig {
         assertEquals(RESTHEART_VERSION_EXPECTED, MyUtils.getRestheartVersion());
     }
 
-    @Test
+    @Test(timeout = 500)
     public void checkMongoVersion() {
         Document command = new Document("serverStatus", 1);
         Document result = MONGO_CLIENT.getDatabase(MONGO_TEST_DATABASE).runCommand(command);
