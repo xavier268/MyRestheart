@@ -11,11 +11,11 @@ package com.twiceagain.myrestheart.utils;
  */
 public interface TestConfig {
 
-     final String TESTPASSWORD = "changeit";
-     final String TESTUSER = "admin";
+     final static String TESTPASSWORD = "changeit";
+     final static String TESTUSER = "admin";
      
-     final String BASE_RESTHEART_HTTP = "http://localhost:8080";
-     final String BASE_RESTHEART_HTTPS = "https://localhost:4443";
-     final String BASE_MONGO_HTTP = "http://localhost:27017";
+     final static String BASE_RESTHEART_HTTP = "http://localhost:8080";
+     final static String BASE_RESTHEART_HTTPS = "https://localhost:4443";
+     final static String BASE_MONGO_HTTP = "http://localhost:27017";
     
 }
