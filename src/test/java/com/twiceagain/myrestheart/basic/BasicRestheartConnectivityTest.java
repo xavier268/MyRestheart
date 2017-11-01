@@ -8,8 +8,6 @@ package com.twiceagain.myrestheart.basic;
 import com.twiceagain.myrestheart.utils.HttpUtilities;
 import com.twiceagain.myrestheart.MyEntryPoint;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.net.ssl.SSLHandshakeException;
 import org.apache.http.HttpResponse;
 import org.junit.AfterClass;
@@ -21,18 +19,15 @@ import org.junit.Test;
  *
  * @author xavier
  */
-public class BasicConnectivityTest extends HttpUtilities{
+public class BasicRestheartConnectivityTest extends HttpUtilities{
 
-    public BasicConnectivityTest() {
+    public BasicRestheartConnectivityTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
-        try {
         MyEntryPoint.start(new String[0]);
-        } catch(Exception ex) {
-            System.out.println("Seems Restheart already running ?");
-        }
+        
     }
 
     @AfterClass

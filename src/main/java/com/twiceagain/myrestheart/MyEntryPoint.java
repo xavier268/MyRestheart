@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.restheart.Bootstrapper;
-import org.restheart.Shutdowner;
 
 /**
  *
@@ -20,9 +19,9 @@ public class MyEntryPoint {
 
     /**
      * This contains the arguments used to call the bootstrapper, possibly after
-     * substitution. It is needed to call the shutdowner ...
+     * substitution. It might be needed to call the shutdowner later ...
      */
-    static public List<String> ARGS;
+    static public List<String> ARGS = null;
 
     /**
      * @param args the command line arguments
@@ -32,6 +31,12 @@ public class MyEntryPoint {
     }
 
     public static void start(String[] args) {
+        // Do nothing if already running ...
+        // Typically, tests will make multiple calls to start
+        if (ARGS != null) {
+            return;
+        }
+
         // Identify custom vs. standard version.
         System.out.println("\nStarting my customized bootstrapper (MyRestheart) ...");
 
@@ -46,14 +51,7 @@ public class MyEntryPoint {
 
         Bootstrapper.main((String[]) ARGS.toArray(args));
     }
+
     
-    /**
-     * Immediately stops the running instance (and the whole application !).
-     * @param args the command line arguments
-     */
-    public static void stop(String[] args)  {
-        System.out.printf("\nPreparing to abort custom Restheart application  ...\n");
-        Shutdowner.main(ARGS.toArray(args));
-    }
 
 }
