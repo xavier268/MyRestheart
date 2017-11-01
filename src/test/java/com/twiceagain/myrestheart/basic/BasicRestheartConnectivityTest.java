@@ -7,6 +7,7 @@ package com.twiceagain.myrestheart.basic;
 
 import com.twiceagain.myrestheart.utils.HttpUtilities;
 import com.twiceagain.myrestheart.MyEntryPoint;
+import com.twiceagain.myrestheart.utils.TestConfig;
 import java.io.IOException;
 import javax.net.ssl.SSLHandshakeException;
 import org.apache.http.HttpResponse;
@@ -19,7 +20,7 @@ import org.junit.Test;
  *
  * @author xavier
  */
-public class BasicRestheartConnectivityTest extends HttpUtilities{
+public class BasicRestheartConnectivityTest extends HttpUtilities implements TestConfig{
 
     public BasicRestheartConnectivityTest() {
     }
@@ -38,7 +39,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
     @Test
     public void browserIsReacheable() throws IOException {
         System.out.println("Test browser is reacheable (no trailing slash)");
-        HttpResponse rep = get("http://localhost:8080/browser");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser");
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
     }
@@ -46,7 +47,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
     @Test
     public void browserIsReacheableTrailingSlash() throws IOException {
         System.out.println("Test browser is reacheable (with trailing slash)");
-        HttpResponse rep = get("http://localhost:8080/browser/");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser/");
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
     }
@@ -55,7 +56,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
     @Deprecated 
     public void browserIsReacheableOnHttps() throws IOException {
         System.out.println("Test browser is reacheable on https - generates exception for selfsigned certyificate ...");
-        HttpResponse rep = get("https://localhost:4443/browser/");        
+        HttpResponse rep = get(BASE_RESTHEART_HTTPS + "/browser/");        
     }
     
     
@@ -63,7 +64,7 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
     @Test
     public void browserContent() throws IOException {
         System.out.println("Test browser content is credible");
-        HttpResponse rep = get("http://localhost:8080/browser");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/browser");
         String content = retrieveContent(rep);
         assertEquals(200, rep.getStatusLine().getStatusCode());
         assertEquals("text/html", rep.getEntity().getContentType().getValue());
@@ -74,14 +75,14 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
     @Test
     public void rootAccess() throws IOException {
         System.out.println("Test root access - should be unauthorized (401)");
-        HttpResponse rep = get("http://localhost:8080/");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP);
         assertEquals(401, rep.getStatusLine().getStatusCode());        
     }
     
     @Test
     public void pingTest() throws IOException {
         System.out.println("Test /_logic/ping - should contain ciao ...");
-        HttpResponse rep = get("http://localhost:8080/_logic/ping");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/_logic/ping");
         assertEquals(200, rep.getStatusLine().getStatusCode());   
         assertTrue(retrieveContent(rep).contains("ciao from the restheart team"));
    
@@ -90,24 +91,10 @@ public class BasicRestheartConnectivityTest extends HttpUtilities{
 @Test
     public void unknownUnauthorizedCollection() throws IOException {
         System.out.println("Test unknown mongo collection");
-        HttpResponse rep = get("http://localhost:8080/nonexistingcollection/");
+        HttpResponse rep = get(BASE_RESTHEART_HTTP + "/nonexistingcollection/");
         assertEquals(401, rep.getStatusLine().getStatusCode()); 
     }
-    // ================================Utilities====================================
-    /**
-     * Get a response via Http.
-     *
-     * @param uri
-     * @return
-     * @throws java.io.IOException
-     */
-    /**
-     * Retrieve content as String.
-     *
-     * @param response
-     * @return
-     * @throws java.io.IOException
-     */
+    
     
    
     
