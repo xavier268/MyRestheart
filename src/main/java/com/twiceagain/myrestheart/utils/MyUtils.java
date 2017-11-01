@@ -84,14 +84,14 @@ public class MyUtils {
         try {
             String configure = copyResourceToFile("mydefaultconfig.yml");
             String security = copyResourceToFile("security.yml");
-            final String MONGO = System.getProperty("mongo", "mongodb://localhost:27017");
-            System.out.println("mongo-uri configuration replaced with : " + MONGO);
+            String mongo = getMongoUri();
+            System.out.println("mongo-uri configuration replaced with : " + mongo);
             // Substitute selected value in configuration
             List<String> newConf = Files.lines(Paths.get(configure))
                     .map((line) -> {
                         return line
                                 .replaceAll("conf-file:\\s*security.yml", "conf-file: " + security)
-                                .replaceAll("mongo-uri:.*$", "mongo-uri: " + MONGO);
+                                .replaceAll("mongo-uri:.*$", "mongo-uri: " + mongo);
                     })
                     .collect(Collectors.toList());
 
