@@ -24,7 +24,7 @@ public interface TestConfig {
 
     final static String MONGO_HOST = "localhost";
     final static Integer MONGO_PORT = 27017;
-    final static String MONGO_HTTP = "http://"+MONGO_HOST+"/"+MONGO_PORT;
+    final static String MONGO_HTTP = "http://"+MONGO_HOST+":"+MONGO_PORT;
     final static String MONGO_SERVER_VERSION_EXPECTED = "3.4";
     final static String MONGO_TEST_DATABASE = "testDatabase";
     final static MongoClient MONGO_CLIENT = new MongoClient(MONGO_HOST, MONGO_PORT);
