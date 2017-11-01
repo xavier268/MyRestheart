@@ -90,8 +90,8 @@ public class MyUtils {
             List<String> newConf = Files.lines(Paths.get(configure))
                     .map((line) -> {
                         return line
-                                .replaceAll("conf-file:\\s*security.yml", "conf-file: " + security)
-                                .replaceAll("mongo-uri:.*$", "mongo-uri: " + mongo);
+                                .replaceAll("conf-file:\\s*security.yml", "conf-file: \"" + security + "\"")
+                                .replaceAll("mongo-uri:.*$", "mongo-uri: \"" + mongo + "\"");
                     })
                     .collect(Collectors.toList());
 

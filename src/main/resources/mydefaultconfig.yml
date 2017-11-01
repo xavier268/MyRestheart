@@ -99,7 +99,12 @@ static-resources-mounts:
 # GetRoleHandler bound to /_logic/roles that returns the current user authentication status and eventually its roles
 # CacheInvalidator bound to /_logic/ic that invalidates a db or collection cache entry
 
+# MongoUriHandler will return the mongo-uri used.
+
 application-logic-mounts:
+    - what: com.twiceagain.myrestheart.mylogic.myhandlers.MongoUriHandler
+      where: /mongo-uri
+      secured: false
     - what: org.restheart.handlers.applicationlogic.PingHandler
       where: /ping
       secured: false
@@ -331,4 +336,5 @@ connection-options:
     # The HTTP spec says this header should be added to all responses, 
     # unless the server does not have an accurate clock.
     # Defaults to true
-ALWAYS_SET_DATE: true
+    ALWAYS_SET_DATE: true
+    
