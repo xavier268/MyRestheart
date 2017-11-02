@@ -66,12 +66,12 @@ use-embedded-keystore: true
 #
 # More information at http://api.mongodb.org/java/current/com/mongodb/MongoClientURI.html
 
-mongo-uri: this line must exist, and will be replaced with mongodb://127.0.0.1 or provided 'mongo'  property
+mongo-uri: "this line must exist, and will be replaced with mongodb://127.0.0.1 or provided 'mongo'  property"
 
 # Use mongo-mounts to bind URls to mongodb resources using the out-of-the-box URL rewrite feature.
 mongo-mounts:
     - what: "*"
-      where: /
+      where: /api
 
 #### Static Web Resources
 

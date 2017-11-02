@@ -21,6 +21,7 @@ public interface TestConfig {
 
     final static String RESTHEART_HTTP = "http://localhost:8080";
     final static String RESTHEART_HTTPS = "https://localhost:4443";
+    final static String RESTHEART_API = "/api"; // where the data is ...
 
     final static String RESTHEART_VERSION_EXPECTED = "3.1.3";
 

@@ -75,9 +75,20 @@ public class BasicRestheartConnectivityTest extends TestUtilities implements Tes
     @Test
     public void rootAccess() throws IOException {
         System.out.println("Test root access - should be unauthorized (401)");
-        HttpResponse rep = get(RESTHEART_HTTP);
+        HttpResponse rep = get(RESTHEART_HTTP + RESTHEART_API);
         assertEquals(401, rep.getStatusLine().getStatusCode());        
     }
+    
+   @Test
+    public void rootAccessNoApi() throws IOException {
+        if(!RESTHEART_API.isEmpty()){
+        System.out.println("Test / access without api prefix : " + RESTHEART_API);
+        HttpResponse rep = get(RESTHEART_HTTP + RESTHEART_API);
+        assertEquals(401, rep.getStatusLine().getStatusCode());    
+        }
+    }
+    
+    
     
     @Test
     public void pingTest() throws IOException {
@@ -91,7 +102,7 @@ public class BasicRestheartConnectivityTest extends TestUtilities implements Tes
 @Test
     public void unknownUnauthorizedCollection() throws IOException {
         System.out.println("Test unknown mongo collection");
-        HttpResponse rep = get(RESTHEART_HTTP + "/nonexistingcollection/");
+        HttpResponse rep = get(RESTHEART_HTTP +RESTHEART_API +  "/nonexistingcollection/");
         assertEquals(401, rep.getStatusLine().getStatusCode()); 
     }
     
