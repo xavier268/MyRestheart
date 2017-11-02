@@ -10,8 +10,6 @@ Customized Restheart Server ( see www.restheart.org ) and related utilities.
 /api         |   Main mongo ressource interface
 /api/xxx...   |   Access to collection and mongo ressources
 /api/roles/anId  |   Check credentials for anId, get security roles
-
-/_logic          |   Main application logic interface
 /_logic/ping      |   Ping handler
 /_logic/mongo-uri  |   (debug) : Get the mongodb uri as used by running instance
 /_authtokens/anId  |   DELETE: invalidate the current token, GET: refresh the current token
