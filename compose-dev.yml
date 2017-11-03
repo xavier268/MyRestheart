@@ -6,12 +6,18 @@ version: "3"
 networks:
   myoverlay:
     driver: overlay
+    
+volumes:
+    dbdata:
 
 services:
   mymongo:
     image: "mvertes/alpine-mongo:latest"
+    command: ["mongod","--quiet"]
     deploy:
       replicas: 1
+    volumes:
+        - dbdata:/data/db/
     networks:
       - myoverlay
 
