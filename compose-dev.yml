@@ -14,6 +14,8 @@ services:
   mymongo:
     image: "mvertes/alpine-mongo:latest"
     command: ["mongod","--quiet"]
+    ports:
+      - 27017:27017
     deploy:
       replicas: 1
     volumes:
@@ -38,7 +40,7 @@ services:
     ports:
       - 8081:8081    
     volumes:
-      - ./nginx.conf:/nginx.conf:ro
+      - ./nginx.conf:/nginx.conf
     command: ["nginx", "-g","daemon off;","-c","/nginx.conf"]
     deploy:
       replicas: 1
