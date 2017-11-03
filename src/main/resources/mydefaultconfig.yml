@@ -337,4 +337,3 @@ connection-options:
     # unless the server does not have an accurate clock.
     # Defaults to true
     ALWAYS_SET_DATE: true
-    

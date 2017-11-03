@@ -1,0 +1,29 @@
+# This compose file defines the docker stack for swarm deployement
+#
+
+version: "3"
+
+networks:
+  myoverlay:
+    driver: overlay
+
+services:
+
+  mymongo:
+    image: mongo
+    deploy:
+      replicas: 1
+    networks:
+      - myoverlay
+
+  myrestheart:
+    image: openjdk:8-jre-alpine
+    volumes:
+      - ./target/MyRestheart-1.0-SNAPSHOT.jar:/myjar.jar:ro
+    ports:
+      - 8080:8080
+    command: ["java","-Dmongo=mongodb://mymongo:27017", "-jar", "/myjar.jar"]
+    deploy:
+      replicas: 1
+    networks:
+      - myoverlay
