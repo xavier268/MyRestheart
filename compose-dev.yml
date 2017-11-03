@@ -8,9 +8,8 @@ networks:
     driver: overlay
 
 services:
-
   mymongo:
-    image: mongo
+    image: "mvertes/alpine-mongo:latest"
     deploy:
       replicas: 1
     networks:
