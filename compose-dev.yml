@@ -32,3 +32,15 @@ services:
       replicas: 1
     networks:
       - myoverlay
+
+  mynginx:
+    image: nginx:alpine    
+    ports:
+      - 8081:8081    
+    volumes:
+      - ./nginx.conf:/nginx.conf:ro
+    command: ["nginx", "-g","daemon off;","-c","/nginx.conf"]
+    deploy:
+      replicas: 1
+    networks:
+      - myoverlay
