@@ -15,7 +15,7 @@ services:
     image: "mvertes/alpine-mongo:latest"
     command: ["mongod","--quiet"]
     ports:
-      - 27017:27017
+      - 27017
     deploy:
       replicas: 1
     volumes:
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./target/MyRestheart-1.0-SNAPSHOT.jar:/myjar.jar:ro
     ports:
-      - 8080
+      - 8080:8080
     command: ["java","-Dmongo=mongodb://mymongo:27017", "-jar", "/myjar.jar"]
     deploy:
       replicas: 1
